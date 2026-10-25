@@ -716,10 +716,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ball: {fileID: 713410352}
   player1: {fileID: 296249873}
-  player2: {fileID: 1743141874}
+  player2: {fileID: 0}
+  aiPlayer: {fileID: 1743141875}
   player1Text: {fileID: 1731353654}
   player2Text: {fileID: 1960147468}
-  IAGame: 0
+  IAGame: 1
+  maxScore: 3
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ball
   speed: 7
+  minHorizontal: 0.3
   rb: {fileID: 713410348}
 --- !u!1 &820452957
 GameObject:
