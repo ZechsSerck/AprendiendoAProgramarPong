@@ -9,9 +9,7 @@ public class Goal : MonoBehaviour
     {
         if (!other.CompareTag("Ball")) return;
 
-        if (isLeftGoal)
-            gameManager.Player2Score();
-        else
-            gameManager.Player1Score();
+        // Un gol en la portería izquierda es punto del jugador 2, y viceversa
+        gameManager.AddScore(isLeftGoal ? 2 : 1);
     }
 }

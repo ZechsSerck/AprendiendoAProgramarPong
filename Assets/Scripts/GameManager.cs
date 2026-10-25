@@ -22,22 +22,17 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
     }
 
-    public void Player1Score()
+    // Suma un punto al jugador indicado (1 o 2)
+    public void AddScore(int player)
     {
         // Ignora goles una vez hay ganador
         if (gameOver) return;
 
-        player1Score++;
-        UpdateScoreUI();
-        if (!CheckVictory())
-            ResetRound();
-    }
+        if (player == 1)
+            player1Score++;
+        else
+            player2Score++;
 
-    public void Player2Score()
-    {
-        if (gameOver) return;
-
-        player2Score++;
         UpdateScoreUI();
         if (!CheckVictory())
             ResetRound();
