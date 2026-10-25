@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    public string menuScene = "MainMenu";
-    public string playerVsAIScene = "PlayerVSAI";
-    public string playerVsPlayerScene = "PlayerVSPlayer";
+    [SerializeField] private string menuScene = "MainMenu";
+    [SerializeField] private string playerVsAIScene = "PlayerVSAI";
+    [SerializeField] private string playerVsPlayerScene = "PlayerVSPlayer";
 
     void Update()
     {

@@ -4,18 +4,25 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Ball ball;
+    [SerializeField] private Ball ball;
     // Cualquier pala vale: Players para humanos, AI para la máquina
-    public Paddle player1;
-    public Paddle player2;
+    [SerializeField] private Paddle player1;
+    [SerializeField] private Paddle player2;
 
-    public TMP_Text player1Text;
-    public TMP_Text player2Text;
-    public int maxScore = 3;
+    [SerializeField] private TMP_Text player1Text;
+    [SerializeField] private TMP_Text player2Text;
+    [SerializeField] private int maxScore = 3;
 
     private int player1Score;
     private int player2Score;
     private bool gameOver;
+
+    void Awake()
+    {
+        // Avisa en consola de referencias sin asignar en vez de fallar en el primer gol
+        if (ball == null || player1 == null || player2 == null || player1Text == null || player2Text == null)
+            Debug.LogError("GameManager: faltan referencias por asignar en el Inspector", this);
+    }
 
     void Start()
     {

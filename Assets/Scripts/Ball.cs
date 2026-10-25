@@ -1,13 +1,21 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Ball : MonoBehaviour
 {
-    public float speed = 7;
+    [SerializeField] private float speed = 7;
     // Componente horizontal mínima de la dirección (0-1) para evitar rebotes casi verticales
-    [Range(0f, 0.9f)] public float minHorizontal = 0.3f;
-    public Rigidbody2D rb;
+    [SerializeField, Range(0f, 0.9f)] private float minHorizontal = 0.3f;
+    [SerializeField] private Rigidbody2D rb;
 
     private Vector2 startPosition;
+
+    void Awake()
+    {
+        // Si no se asignó en el Inspector, usa el Rigidbody2D del mismo objeto
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
+    }
 
     void Start()
     {

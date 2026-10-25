@@ -1,10 +1,11 @@
 using UnityEngine;
 
 // Base común de las palas: movimiento vertical y reset de posición
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class Paddle : MonoBehaviour
 {
-    public float speed = 5;
-    public Rigidbody2D rb;
+    [SerializeField] protected float speed = 5;
+    [SerializeField] private Rigidbody2D rb;
 
     // Dirección vertical (-1, 0 o 1) que decide cada tipo de pala en Update
     protected float move;
@@ -13,6 +14,10 @@ public abstract class Paddle : MonoBehaviour
 
     protected virtual void Awake()
     {
+        // Si no se asignó en el Inspector, usa el Rigidbody2D del mismo objeto
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
+
         startPosition = transform.position;
     }
 

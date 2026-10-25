@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    public GameManager gameManager;
-    public bool isLeftGoal;
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private bool isLeftGoal;
 
     void OnTriggerEnter2D(Collider2D other)
     {

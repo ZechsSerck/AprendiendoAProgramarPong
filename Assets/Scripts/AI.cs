@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AI : Paddle
 {
-    public float deadZone = 0.2f;
-    public Transform ball;
+    [SerializeField] private float deadZone = 0.2f;
+    [SerializeField] private Transform ball;
 
     void Reset()
     {
@@ -11,8 +11,18 @@ public class AI : Paddle
         speed = 3;
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (ball == null)
+            Debug.LogError("AI: falta asignar la bola en el Inspector", this);
+    }
+
     void Update()
     {
+        if (ball == null) return;
+
         float difference = ball.position.y - transform.position.y;
 
         if (Mathf.Abs(difference) > deadZone)

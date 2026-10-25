@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Players : Paddle
 {
-    public bool player1;
+    [SerializeField] private bool player1;
 
     protected override void Awake()
     {

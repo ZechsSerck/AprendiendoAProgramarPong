@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class VictoryScene : MonoBehaviour
 {
-    public float delay = 3f;
-    public string menuScene = "MainMenu";
+    [SerializeField] private float delay = 3f;
+    [SerializeField] private string menuScene = "MainMenu";
 
     void Start()
     {
