@@ -5,7 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Ball : MonoBehaviour
 {
+    // Rapidez de cada saque; sube con cada golpe de pala hasta maxSpeed
     [SerializeField] private float speed = 7;
+    [SerializeField] private float speedIncrease = 0.5f;
+    [SerializeField] private float maxSpeed = 14;
     // Componente horizontal mínima de la dirección (0-1) para evitar rebotes casi verticales
     [SerializeField, Range(0f, 0.9f)] private float minHorizontal = 0.3f;
     [SerializeField] private Rigidbody2D rb;
@@ -19,12 +22,16 @@ public class Ball : MonoBehaviour
     [SerializeField] private TMP_Text countdownText;
 
     private Vector2 startPosition;
+    private float currentSpeed;
 
     void Awake()
     {
         // Si no se asignó en el Inspector, usa el Rigidbody2D del mismo objeto
         if (rb == null)
             rb = GetComponent<Rigidbody2D>();
+
+        // A más velocidad, la detección discreta deja que la bola atraviese las palas
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     void Start()
@@ -37,7 +44,7 @@ public class Ball : MonoBehaviour
     {
         // Mantiene la rapidez constante después de los rebotes
         if (rb.linearVelocity != Vector2.zero)
-            rb.linearVelocity = LimitAngle(rb.linearVelocity.normalized) * speed;
+            rb.linearVelocity = LimitAngle(rb.linearVelocity.normalized) * currentSpeed;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -53,7 +60,8 @@ public class Ball : MonoBehaviour
         float angle = offset * maxBounceAngle * Mathf.Deg2Rad;
         Vector2 direction = new Vector2(Mathf.Cos(angle) * side, Mathf.Sin(angle));
 
-        rb.linearVelocity = direction * speed;
+        currentSpeed = Mathf.Min(currentSpeed + speedIncrease, maxSpeed);
+        rb.linearVelocity = direction * currentSpeed;
     }
 
     // Si la bola va casi en vertical, endereza la dirección conservando el sentido
@@ -102,6 +110,8 @@ public class Ball : MonoBehaviour
         float x = Random.value < 0.5f ? -1f : 1f;
         float y = Random.Range(-0.7f, 0.7f);
 
-        rb.linearVelocity = new Vector2(x, y).normalized * speed;
+        // Cada saque vuelve a la rapidez inicial
+        currentSpeed = speed;
+        rb.linearVelocity = new Vector2(x, y).normalized * currentSpeed;
     }
 }
