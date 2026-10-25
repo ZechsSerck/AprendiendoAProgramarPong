@@ -10,7 +10,7 @@ public class AI : MonoBehaviour
     private float move;
     private Vector2 startPosition;
 
-    void Start()
+    void Awake()
     {
         startPosition = transform.position;
     }
