@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     private int player1Score;
     private int player2Score;
+    private bool gameOver;
 
     void Start()
     {
@@ -24,18 +25,23 @@ public class GameManager : MonoBehaviour
 
     public void Player1Score()
     {
+        // Ignora goles una vez hay ganador
+        if (gameOver) return;
+
         player1Score++;
         UpdateScoreUI();
-        CheckVictory();
-        ResetRound();
+        if (!CheckVictory())
+            ResetRound();
     }
 
     public void Player2Score()
     {
+        if (gameOver) return;
+
         player2Score++;
         UpdateScoreUI();
-        CheckVictory();
-        ResetRound();
+        if (!CheckVictory())
+            ResetRound();
     }
 
     private void UpdateScoreUI()
@@ -56,17 +62,21 @@ public class GameManager : MonoBehaviour
             player2.ResetPosition();
     }
 
-    public void CheckVictory()
+    // Devuelve true si algún jugador ha ganado y se carga la escena de victoria
+    public bool CheckVictory()
     {
         if (player1Score >= maxScore)
         {
+            gameOver = true;
             SceneManager.LoadScene("VictoryPlayer1");
         }
-
-        if (player2Score >= maxScore)
+        else if (player2Score >= maxScore)
         {
+            gameOver = true;
             SceneManager.LoadScene("VictoryPlayer2");
         }
+
+        return gameOver;
     }
 
 }
