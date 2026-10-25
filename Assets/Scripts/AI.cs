@@ -1,18 +1,14 @@
 using UnityEngine;
 
-public class AI : MonoBehaviour
+public class AI : Paddle
 {
-    public float speed = 3;
     public float deadZone = 0.2f;
     public Transform ball;
-    public Rigidbody2D rb;
 
-    private float move;
-    private Vector2 startPosition;
-
-    void Awake()
+    void Reset()
     {
-        startPosition = transform.position;
+        // La IA es más lenta que un jugador por defecto
+        speed = 3;
     }
 
     void Update()
@@ -23,16 +19,5 @@ public class AI : MonoBehaviour
             move = Mathf.Sign(difference);
         else
             move = 0;
-    }
-
-    void FixedUpdate()
-    {
-        rb.linearVelocity = new Vector2(0, move * speed);
-    }
-
-    public void ResetPosition()
-    {
-        rb.linearVelocity = Vector2.zero;
-        rb.position = startPosition;
     }
 }

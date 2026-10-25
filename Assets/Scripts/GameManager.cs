@@ -5,13 +5,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Ball ball;
-    public Players player1;
-    public Players player2;
-    public AI aiPlayer;
+    // Cualquier pala vale: Players para humanos, AI para la máquina
+    public Paddle player1;
+    public Paddle player2;
 
     public TMP_Text player1Text;
     public TMP_Text player2Text;
-    public bool IAGame;
     public int maxScore = 3;
 
     private int player1Score;
@@ -54,12 +53,7 @@ public class GameManager : MonoBehaviour
     {
         ball.ResetBall();
         player1.ResetPosition();
-
-        // En modo IA el rival es el componente AI, no Players
-        if (IAGame && aiPlayer != null)
-            aiPlayer.ResetPosition();
-        else if (player2 != null)
-            player2.ResetPosition();
+        player2.ResetPosition();
     }
 
     // Devuelve true si algún jugador ha ganado y se carga la escena de victoria

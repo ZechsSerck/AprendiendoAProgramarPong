@@ -1,18 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Players : MonoBehaviour
+public class Players : Paddle
 {
     public bool player1;
-    public float speed = 5;
-    public Rigidbody2D rb;
 
-    private float move;
-    private Vector2 startPosition;
-
-    void Awake()
+    protected override void Awake()
     {
-        startPosition = transform.position;
+        base.Awake();
 
         // Si la pala la controla la IA, el teclado no debe moverla
         if (GetComponent<AI>() != null)
@@ -36,16 +31,5 @@ public class Players : MonoBehaviour
             if (kb.upArrowKey.isPressed) move = 1;
             else if (kb.downArrowKey.isPressed) move = -1;
         }
-    }
-
-    void FixedUpdate()
-    {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, move * speed);
-    }
-
-    public void ResetPosition()
-    {
-        rb.linearVelocity = Vector2.zero;
-        rb.position = startPosition;
     }
 }
