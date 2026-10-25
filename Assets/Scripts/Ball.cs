@@ -10,6 +10,9 @@ public class Ball : MonoBehaviour
     [SerializeField, Range(0f, 0.9f)] private float minHorizontal = 0.3f;
     [SerializeField] private Rigidbody2D rb;
 
+    // Ángulo máximo de salida, en grados, al golpear el borde de una pala
+    [SerializeField, Range(0f, 70f)] private float maxBounceAngle = 60f;
+
     // Segundos de espera antes de cada saque
     [SerializeField] private float serveDelay = 1.5f;
     // Texto opcional para mostrar la cuenta atrás
@@ -35,6 +38,22 @@ public class Ball : MonoBehaviour
         // Mantiene la rapidez constante después de los rebotes
         if (rb.linearVelocity != Vector2.zero)
             rb.linearVelocity = LimitAngle(rb.linearVelocity.normalized) * speed;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.GetComponent<Paddle>() == null) return;
+
+        // Punto de impacto relativo al centro de la pala: -1 (abajo) a 1 (arriba)
+        Bounds paddle = collision.collider.bounds;
+        float offset = Mathf.Clamp((rb.position.y - paddle.center.y) / paddle.extents.y, -1f, 1f);
+
+        // Sale hacia el lado contrario de la pala, más inclinada cuanto más lejos del centro
+        float side = Mathf.Sign(rb.position.x - paddle.center.x);
+        float angle = offset * maxBounceAngle * Mathf.Deg2Rad;
+        Vector2 direction = new Vector2(Mathf.Cos(angle) * side, Mathf.Sin(angle));
+
+        rb.linearVelocity = direction * speed;
     }
 
     // Si la bola va casi en vertical, endereza la dirección conservando el sentido
