@@ -33,6 +33,6 @@ public class AI : MonoBehaviour
     public void ResetPosition()
     {
         rb.linearVelocity = Vector2.zero;
-        transform.position = startPosition;
+        rb.position = startPosition;
     }
 }

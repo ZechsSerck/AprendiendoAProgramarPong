@@ -22,7 +22,8 @@ public class Ball : MonoBehaviour
 
     public void ResetBall()
     {
-        transform.position = startPosition;
+        // Se mueve el Rigidbody2D, no el Transform, para que las físicas no vean un salto
+        rb.position = startPosition;
         Launch();
     }
 
