@@ -10,9 +10,13 @@ public class Players : MonoBehaviour
     private float move;
     private Vector2 startPosition;
 
-    void Start()
+    void Awake()
     {
         startPosition = transform.position;
+
+        // Si la pala la controla la IA, el teclado no debe moverla
+        if (GetComponent<AI>() != null)
+            enabled = false;
     }
 
     void Update()
