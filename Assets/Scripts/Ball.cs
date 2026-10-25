@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,6 +9,11 @@ public class Ball : MonoBehaviour
     // Componente horizontal mínima de la dirección (0-1) para evitar rebotes casi verticales
     [SerializeField, Range(0f, 0.9f)] private float minHorizontal = 0.3f;
     [SerializeField] private Rigidbody2D rb;
+
+    // Segundos de espera antes de cada saque
+    [SerializeField] private float serveDelay = 1.5f;
+    // Texto opcional para mostrar la cuenta atrás
+    [SerializeField] private TMP_Text countdownText;
 
     private Vector2 startPosition;
 
@@ -20,7 +27,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         startPosition = transform.position;
-        Launch();
+        StartCoroutine(ServeAfterDelay());
     }
 
     void FixedUpdate()
@@ -45,6 +52,29 @@ public class Ball : MonoBehaviour
     {
         // Se mueve el Rigidbody2D, no el Transform, para que las físicas no vean un salto
         rb.position = startPosition;
+        StopAllCoroutines();
+        StartCoroutine(ServeAfterDelay());
+    }
+
+    // Deja la bola quieta en el centro, muestra la cuenta atrás y saca
+    private IEnumerator ServeAfterDelay()
+    {
+        rb.linearVelocity = Vector2.zero;
+
+        // Usa tiempo escalado para que la cuenta atrás se detenga en pausa
+        float remaining = serveDelay;
+        while (remaining > 0)
+        {
+            if (countdownText != null)
+                countdownText.text = Mathf.CeilToInt(remaining).ToString();
+
+            remaining -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (countdownText != null)
+            countdownText.text = "";
+
         Launch();
     }
 
