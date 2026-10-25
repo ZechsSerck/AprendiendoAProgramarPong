@@ -3,6 +3,8 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     public float speed = 7;
+    // Componente horizontal mínima de la dirección (0-1) para evitar rebotes casi verticales
+    [Range(0f, 0.9f)] public float minHorizontal = 0.3f;
     public Rigidbody2D rb;
 
     private Vector2 startPosition;
@@ -17,7 +19,18 @@ public class Ball : MonoBehaviour
     {
         // Mantiene la rapidez constante después de los rebotes
         if (rb.linearVelocity != Vector2.zero)
-            rb.linearVelocity = rb.linearVelocity.normalized * speed;
+            rb.linearVelocity = LimitAngle(rb.linearVelocity.normalized) * speed;
+    }
+
+    // Si la bola va casi en vertical, endereza la dirección conservando el sentido
+    private Vector2 LimitAngle(Vector2 direction)
+    {
+        if (Mathf.Abs(direction.x) >= minHorizontal)
+            return direction;
+
+        float x = Mathf.Sign(direction.x) * minHorizontal;
+        float y = Mathf.Sign(direction.y) * Mathf.Sqrt(1f - minHorizontal * minHorizontal);
+        return new Vector2(x, y);
     }
 
     public void ResetBall()
