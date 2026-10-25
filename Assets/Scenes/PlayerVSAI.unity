@@ -438,9 +438,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836202ad1efa6fb4aa9b0d7a8a33658c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Players
-  player1: 1
   speed: 5
   rb: {fileID: 296249871}
+  player1: 1
 --- !u!1 &437128224
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,11 +716,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   ball: {fileID: 713410352}
   player1: {fileID: 296249873}
-  player2: {fileID: 0}
-  aiPlayer: {fileID: 1743141875}
+  player2: {fileID: 1743141875}
   player1Text: {fileID: 1731353654}
   player2Text: {fileID: 1960147468}
-  IAGame: 1
   maxScore: 3
 --- !u!1 &619394800
 GameObject:
@@ -1570,7 +1568,6 @@ GameObject:
   - component: {fileID: 1743141870}
   - component: {fileID: 1743141873}
   - component: {fileID: 1743141872}
-  - component: {fileID: 1743141874}
   - component: {fileID: 1743141875}
   m_Layer: 0
   m_Name: Player2
@@ -1727,21 +1724,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1743141874
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743141869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 836202ad1efa6fb4aa9b0d7a8a33658c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Players
-  player1: 0
-  speed: 5
-  rb: {fileID: 1743141872}
 --- !u!114 &1743141875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,9 +1737,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI
   speed: 3
+  rb: {fileID: 1743141872}
   deadZone: 0.2
   ball: {fileID: 713410351}
-  rb: {fileID: 1743141872}
 --- !u!1 &1888866686
 GameObject:
   m_ObjectHideFlags: 0
