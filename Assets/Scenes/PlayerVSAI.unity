@@ -894,6 +894,16 @@ MonoBehaviour:
   speed: 5
   rb: {fileID: 296249871}
   player1: 1
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: Axis
+    m_Id: 8c1919a6-29f0-4fa9-874b-2c6c26abcf80
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+    m_Priority: 0
 --- !u!1 &437128224
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,6 +1141,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1256,6 +1267,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68913ccc7f953554690cc202d671c6af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFit
+  targetAspect: 1.7777778
 --- !u!1 &523448366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,6 +1330,8 @@ MonoBehaviour:
   player1Text: {fileID: 1731353654}
   player2Text: {fileID: 1960147468}
   maxScore: 3
+  victoryScene: Victory
+  goalClip: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,6 +1782,8 @@ MonoBehaviour:
   maxBounceAngle: 60
   serveDelay: 1.5
   countdownText: {fileID: 1982688164}
+  paddleClip: {fileID: 0}
+  wallClip: {fileID: 0}
 --- !u!1 &820452957
 GameObject:
   m_ObjectHideFlags: 0
