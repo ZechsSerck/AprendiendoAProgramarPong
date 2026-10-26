@@ -21,6 +21,7 @@ public class AI : Paddle
     [SerializeField] private DifficultySettings hard = new DifficultySettings { speed = 4.5f, deadZone = 0.1f, reactionTime = 0.03f, aimError = 0.1f };
 
     private DifficultySettings settings;
+    private Rigidbody2D ballBody;
     private float targetY;
     private float nextReactionTime;
 
@@ -30,6 +31,8 @@ public class AI : Paddle
 
         if (ball == null)
             Debug.LogError("AI: falta asignar la bola en el Inspector", this);
+        else
+            ballBody = ball.GetComponent<Rigidbody2D>();
 
         settings = GameSession.Difficulty switch
         {
@@ -45,11 +48,16 @@ public class AI : Paddle
     {
         if (ball == null) return;
 
-        // Solo actualiza el objetivo cada reactionTime, con algo de error
+        // Solo actualiza el objetivo cada reactionTime: sigue la bola si viene hacia
+        // la pala (con algo de error) y, si se aleja o está parada, vuelve al centro
         if (Time.time >= nextReactionTime)
         {
             nextReactionTime = Time.time + settings.reactionTime;
-            targetY = ball.position.y + Random.Range(-settings.aimError, settings.aimError);
+
+            if (IsBallApproaching())
+                targetY = ball.position.y + Random.Range(-settings.aimError, settings.aimError);
+            else
+                targetY = StartPosition.y;
         }
 
         float difference = targetY - transform.position.y;
@@ -58,5 +66,14 @@ public class AI : Paddle
             move = Mathf.Sign(difference);
         else
             move = 0;
+    }
+
+    private bool IsBallApproaching()
+    {
+        if (ballBody == null) return true;
+
+        float velocityX = ballBody.linearVelocity.x;
+        float sideOfPaddle = transform.position.x - ball.position.x;
+        return velocityX != 0 && Mathf.Sign(velocityX) == Mathf.Sign(sideOfPaddle);
     }
 }

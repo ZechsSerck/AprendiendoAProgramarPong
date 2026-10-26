@@ -11,6 +11,7 @@ public abstract class Paddle : MonoBehaviour
     protected float move;
 
     private Vector2 startPosition;
+    protected Vector2 StartPosition => startPosition;
 
     protected virtual void Awake()
     {
