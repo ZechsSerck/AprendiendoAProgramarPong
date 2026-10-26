@@ -15,11 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayerVSPlayer.unity
     guid: 234fc586dbbed3241847917922db1401
   - enabled: 1
-    path: Assets/Scenes/VictoryPlayer1.unity
+    path: Assets/Scenes/Victory.unity
     guid: 2a8b8508573cae5498e0f6aa8a077c32
-  - enabled: 1
-    path: Assets/Scenes/VictoryPlayer2.unity
-    guid: 598fc415a9a80a34b8894348c9f26901
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
