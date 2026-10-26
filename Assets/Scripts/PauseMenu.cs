@@ -5,14 +5,15 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
+    // Botón "II" en pantalla (para táctil); se oculta mientras el juego está en pausa
+    [SerializeField] private GameObject pauseButton;
     [SerializeField] private string menuScene = "MainMenu";
 
     private bool isPaused;
 
     void Start()
     {
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
+        ShowPauseUI(false);
     }
 
     void Update()
@@ -33,18 +34,24 @@ public class PauseMenu : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
-
-        if (pausePanel != null)
-            pausePanel.SetActive(true);
+        ShowPauseUI(true);
     }
 
     public void Resume()
     {
         isPaused = false;
         Time.timeScale = 1f;
+        ShowPauseUI(false);
+    }
 
+    // En pausa se ve el panel (Continuar y Menú); jugando, solo el botón "II"
+    private void ShowPauseUI(bool paused)
+    {
         if (pausePanel != null)
-            pausePanel.SetActive(false);
+            pausePanel.SetActive(paused);
+
+        if (pauseButton != null)
+            pauseButton.SetActive(!paused);
     }
 
     public void GoToMenu()
