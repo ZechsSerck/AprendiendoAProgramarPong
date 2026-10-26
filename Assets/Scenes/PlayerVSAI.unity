@@ -309,7 +309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Menu
+  m_text: "Men\xFA"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2407,8 +2407,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI
   speed: 3
   rb: {fileID: 1743141872}
-  deadZone: 0.2
   ball: {fileID: 713410351}
+  easy:
+    speed: 2.2
+    deadZone: 0.3
+    reactionTime: 0.3
+    aimError: 0.8
+  normal:
+    speed: 3
+    deadZone: 0.2
+    reactionTime: 0.1
+    aimError: 0.3
+  hard:
+    speed: 4.5
+    deadZone: 0.1
+    reactionTime: 0.03
+    aimError: 0.1
 --- !u!1 &1802672049
 GameObject:
   m_ObjectHideFlags: 0
