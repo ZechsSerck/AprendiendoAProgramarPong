@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 // Pausa la partida con Esc o P y muestra un panel con Continuar y Menú
 public class PauseMenu : MonoBehaviour
@@ -51,7 +50,7 @@ public class PauseMenu : MonoBehaviour
     public void GoToMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(menuScene);
+        SceneLoader.Load(menuScene);
     }
 
     void OnDestroy()

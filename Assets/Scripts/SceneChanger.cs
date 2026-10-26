@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class SceneChanger : MonoBehaviour
     // Juega contra la IA con la última dificultad elegida (Normal por defecto)
     public void PlayVsAI()
     {
-        SceneManager.LoadScene(playerVsAIScene);
+        SceneLoader.Load(playerVsAIScene);
     }
 
     public void PlayVsAIEasy()
@@ -40,12 +39,12 @@ public class SceneChanger : MonoBehaviour
 
     public void PlayVsPlayer()
     {
-        SceneManager.LoadScene(playerVsPlayerScene);
+        SceneLoader.Load(playerVsPlayerScene);
     }
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene(menuScene);
+        SceneLoader.Load(menuScene);
     }
 
     public void Quit()

@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class VictoryScene : MonoBehaviour
 {
@@ -51,12 +50,12 @@ public class VictoryScene : MonoBehaviour
         }
 
         CancelInvoke();
-        SceneManager.LoadScene(GameSession.LastGameScene);
+        SceneLoader.Load(GameSession.LastGameScene);
     }
 
     public void LoadMainMenu()
     {
         CancelInvoke();
-        SceneManager.LoadScene(menuScene);
+        SceneLoader.Load(menuScene);
     }
 }
