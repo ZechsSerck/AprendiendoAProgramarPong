@@ -14,9 +14,28 @@ public class SceneChanger : MonoBehaviour
             Quit();
     }
 
+    // Juega contra la IA con la última dificultad elegida (Normal por defecto)
     public void PlayVsAI()
     {
         SceneManager.LoadScene(playerVsAIScene);
+    }
+
+    public void PlayVsAIEasy()
+    {
+        GameSession.Difficulty = AIDifficulty.Easy;
+        PlayVsAI();
+    }
+
+    public void PlayVsAINormal()
+    {
+        GameSession.Difficulty = AIDifficulty.Normal;
+        PlayVsAI();
+    }
+
+    public void PlayVsAIHard()
+    {
+        GameSession.Difficulty = AIDifficulty.Hard;
+        PlayVsAI();
     }
 
     public void PlayVsPlayer()
