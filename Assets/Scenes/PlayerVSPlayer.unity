@@ -1765,6 +1765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pausePanel: {fileID: 1989109426}
+  pauseButton: {fileID: 279795718}
   menuScene: MainMenu
 --- !u!4 &814907649
 Transform:
