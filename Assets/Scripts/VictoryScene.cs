@@ -12,9 +12,13 @@ public class VictoryScene : MonoBehaviour
     [SerializeField] private float inputDelay = 0.5f;
     // Texto donde se muestra quién ha ganado
     [SerializeField] private TMP_Text winnerText;
+    // Sonido opcional de victoria; si se deja vacío suena un pitido generado
+    [SerializeField] private AudioClip victoryClip;
 
     void Start()
     {
+        ArcadeSound.Play(ArcadeSound.GetSource(gameObject), victoryClip, 660f, 0.5f);
+
         // Si se abre la escena sin jugar (Winner = 0), se deja el texto de la escena
         if (winnerText != null && GameSession.Winner != 0)
             winnerText.text = GameSession.WinnerIsAI ? "Victoria de la IA" : $"Victoria Jugador {GameSession.Winner}";

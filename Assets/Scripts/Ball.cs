@@ -21,8 +21,13 @@ public class Ball : MonoBehaviour
     // Texto opcional para mostrar la cuenta atrás
     [SerializeField] private TMP_Text countdownText;
 
+    // Sonidos opcionales; si se dejan vacíos suena un pitido generado
+    [SerializeField] private AudioClip paddleClip;
+    [SerializeField] private AudioClip wallClip;
+
     private Vector2 startPosition;
     private float currentSpeed;
+    private AudioSource audioSource;
 
     void Awake()
     {
@@ -32,6 +37,8 @@ public class Ball : MonoBehaviour
 
         // A más velocidad, la detección discreta deja que la bola atraviese las palas
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        audioSource = ArcadeSound.GetSource(gameObject);
     }
 
     void Start()
@@ -49,7 +56,14 @@ public class Ball : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<Paddle>() == null) return;
+        // Las frecuencias imitan los pitidos del Pong original
+        if (collision.collider.GetComponent<Paddle>() == null)
+        {
+            ArcadeSound.Play(audioSource, wallClip, 226f, 0.05f);
+            return;
+        }
+
+        ArcadeSound.Play(audioSource, paddleClip, 459f, 0.05f);
 
         // Punto de impacto relativo al centro de la pala: -1 (abajo) a 1 (arriba)
         Bounds paddle = collision.collider.bounds;

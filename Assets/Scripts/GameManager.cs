@@ -13,13 +13,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text player2Text;
     [SerializeField] private int maxScore = 3;
     [SerializeField] private string victoryScene = "Victory";
+    // Sonido opcional de gol; si se deja vacío suena un pitido generado
+    [SerializeField] private AudioClip goalClip;
 
     private int player1Score;
     private int player2Score;
     private bool gameOver;
+    private AudioSource audioSource;
 
     void Awake()
     {
+        audioSource = ArcadeSound.GetSource(gameObject);
+
         // Avisa en consola de referencias sin asignar en vez de fallar en el primer gol
         if (ball == null || player1 == null || player2 == null || player1Text == null || player2Text == null)
             Debug.LogError("GameManager: faltan referencias por asignar en el Inspector", this);
@@ -41,6 +46,7 @@ public class GameManager : MonoBehaviour
         else
             player2Score++;
 
+        ArcadeSound.Play(audioSource, goalClip, 490f, 0.25f);
         UpdateScoreUI();
         if (!CheckVictory())
             ResetRound();
