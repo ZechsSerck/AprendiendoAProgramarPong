@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text player1Text;
     [SerializeField] private TMP_Text player2Text;
     [SerializeField] private int maxScore = 3;
+    [SerializeField] private string victoryScene = "Victory";
 
     private int player1Score;
     private int player2Score;
@@ -61,18 +62,20 @@ public class GameManager : MonoBehaviour
     // Devuelve true si algún jugador ha ganado y se carga la escena de victoria
     public bool CheckVictory()
     {
+        int winner = 0;
         if (player1Score >= maxScore)
-        {
-            gameOver = true;
-            SceneManager.LoadScene("VictoryPlayer1");
-        }
+            winner = 1;
         else if (player2Score >= maxScore)
-        {
-            gameOver = true;
-            SceneManager.LoadScene("VictoryPlayer2");
-        }
+            winner = 2;
 
-        return gameOver;
+        if (winner == 0) return false;
+
+        // La escena de victoria lee el ganador de GameSession
+        gameOver = true;
+        GameSession.Winner = winner;
+        GameSession.WinnerIsAI = (winner == 1 ? player1 : player2) is AI;
+        SceneManager.LoadScene(victoryScene);
+        return true;
     }
 
 }
