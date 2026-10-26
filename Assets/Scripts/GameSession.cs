@@ -8,4 +8,7 @@ public static class GameSession
     // Ganador de la última partida (1 o 2; 0 si aún no hay) y si era la IA
     public static int Winner;
     public static bool WinnerIsAI;
+
+    // Escena de la última partida, para poder jugar la revancha
+    public static string LastGameScene;
 }

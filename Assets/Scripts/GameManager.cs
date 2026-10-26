@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         GameSession.Winner = winner;
         GameSession.WinnerIsAI = (winner == 1 ? player1 : player2) is AI;
+        GameSession.LastGameScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(victoryScene);
         return true;
     }
