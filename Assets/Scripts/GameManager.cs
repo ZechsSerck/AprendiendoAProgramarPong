@@ -4,37 +4,52 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public Ball ball;
-    public Players player1;
-    public Players player2;
+    [SerializeField] private Ball ball;
+    // Cualquier pala vale: Players para humanos, AI para la máquina
+    [SerializeField] private Paddle player1;
+    [SerializeField] private Paddle player2;
 
-    public TMP_Text player1Text;
-    public TMP_Text player2Text;
-    public bool IAGame;
-    public int maxScore = 3;
+    [SerializeField] private TMP_Text player1Text;
+    [SerializeField] private TMP_Text player2Text;
+    [SerializeField] private int maxScore = 3;
+    [SerializeField] private string victoryScene = "Victory";
+    // Sonido opcional de gol; si se deja vacío suena un pitido generado
+    [SerializeField] private AudioClip goalClip;
 
     private int player1Score;
     private int player2Score;
+    private bool gameOver;
+    private AudioSource audioSource;
+
+    void Awake()
+    {
+        audioSource = ArcadeSound.GetSource(gameObject);
+
+        // Avisa en consola de referencias sin asignar en vez de fallar en el primer gol
+        if (ball == null || player1 == null || player2 == null || player1Text == null || player2Text == null)
+            Debug.LogError("GameManager: faltan referencias por asignar en el Inspector", this);
+    }
 
     void Start()
     {
         UpdateScoreUI();
     }
 
-    public void Player1Score()
+    // Suma un punto al jugador indicado (1 o 2)
+    public void AddScore(int player)
     {
-        player1Score++;
-        UpdateScoreUI();
-        CheckVictory();
-        ResetRound();
-    }
+        // Ignora goles una vez hay ganador
+        if (gameOver) return;
 
-    public void Player2Score()
-    {
-        player2Score++;
+        if (player == 1)
+            player1Score++;
+        else
+            player2Score++;
+
+        ArcadeSound.Play(audioSource, goalClip, 490f, 0.25f);
         UpdateScoreUI();
-        CheckVictory();
-        ResetRound();
+        if (!CheckVictory())
+            ResetRound();
     }
 
     private void UpdateScoreUI()
@@ -50,17 +65,24 @@ public class GameManager : MonoBehaviour
         player2.ResetPosition();
     }
 
-    public void CheckVictory()
+    // Devuelve true si algún jugador ha ganado y se carga la escena de victoria
+    public bool CheckVictory()
     {
+        int winner = 0;
         if (player1Score >= maxScore)
-        {
-            SceneManager.LoadScene("VictoryPlayer1");
-        }
+            winner = 1;
+        else if (player2Score >= maxScore)
+            winner = 2;
 
-        if (player2Score >= maxScore)
-        {
-            SceneManager.LoadScene("VictoryPlayer2");
-        }
+        if (winner == 0) return false;
+
+        // La escena de victoria lee el ganador de GameSession
+        gameOver = true;
+        GameSession.Winner = winner;
+        GameSession.WinnerIsAI = (winner == 1 ? player1 : player2) is AI;
+        GameSession.LastGameScene = SceneManager.GetActiveScene().name;
+        SceneLoader.Load(victoryScene);
+        return true;
     }
 
 }

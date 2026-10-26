@@ -1,12 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    public string menuScene = "MainMenu";
-    public string playerVsAIScene = "PlayerVSAI";
-    public string playerVsPlayerScene = "PlayerVSPlayer";
+    [SerializeField] private string menuScene = "MainMenu";
+    [SerializeField] private string playerVsAIScene = "PlayerVSAI";
+    [SerializeField] private string playerVsPlayerScene = "PlayerVSPlayer";
 
     void Update()
     {
@@ -14,19 +13,38 @@ public class SceneChanger : MonoBehaviour
             Quit();
     }
 
+    // Juega contra la IA con la última dificultad elegida (Normal por defecto)
     public void PlayVsAI()
     {
-        SceneManager.LoadScene(playerVsAIScene);
+        SceneLoader.Load(playerVsAIScene);
+    }
+
+    public void PlayVsAIEasy()
+    {
+        GameSession.Difficulty = AIDifficulty.Easy;
+        PlayVsAI();
+    }
+
+    public void PlayVsAINormal()
+    {
+        GameSession.Difficulty = AIDifficulty.Normal;
+        PlayVsAI();
+    }
+
+    public void PlayVsAIHard()
+    {
+        GameSession.Difficulty = AIDifficulty.Hard;
+        PlayVsAI();
     }
 
     public void PlayVsPlayer()
     {
-        SceneManager.LoadScene(playerVsPlayerScene);
+        SceneLoader.Load(playerVsPlayerScene);
     }
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene(menuScene);
+        SceneLoader.Load(menuScene);
     }
 
     public void Quit()

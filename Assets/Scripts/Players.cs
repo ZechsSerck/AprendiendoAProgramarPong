@@ -1,47 +1,59 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Players : MonoBehaviour
+public class Players : Paddle
 {
-    public bool player1;
-    public float speed = 5;
-    public Rigidbody2D rb;
+    [SerializeField] private bool player1;
 
-    private float move;
-    private Vector2 startPosition;
+    // Controles de la pala, editables en el Inspector. Si se deja sin bindings,
+    // se usan los de por defecto: W/S y mando para el jugador 1, flechas para el 2
+    [SerializeField] private InputAction moveAction = new InputAction("Move", InputActionType.Value, expectedControlType: "Axis");
 
-    void Start()
+    protected override void Awake()
     {
-        startPosition = transform.position;
+        base.Awake();
+
+        if (moveAction.bindings.Count == 0)
+            AddDefaultBindings();
+
+        // Si la pala la controla la IA, el teclado no debe moverla
+        if (GetComponent<AI>() != null)
+            enabled = false;
+    }
+
+    void OnEnable()
+    {
+        moveAction.Enable();
+    }
+
+    void OnDisable()
+    {
+        moveAction.Disable();
     }
 
     void Update()
     {
-        move = 0;
+        // Con teclado vale -1, 0 o 1; con el stick del mando, cualquier valor intermedio
+        move = Mathf.Clamp(moveAction.ReadValue<float>(), -1f, 1f);
+    }
 
-        var kb = Keyboard.current;
-        if (kb == null) return;
-
+    private void AddDefaultBindings()
+    {
         if (player1)
         {
-            if (kb.wKey.isPressed) move = 1;
-            else if (kb.sKey.isPressed) move = -1;
+            moveAction.AddCompositeBinding("1DAxis")
+                .With("Negative", "<Keyboard>/s")
+                .With("Positive", "<Keyboard>/w");
+            moveAction.AddBinding("<Gamepad>/leftStick/y");
+            moveAction.AddCompositeBinding("1DAxis")
+                .With("Negative", "<Gamepad>/dpad/down")
+                .With("Positive", "<Gamepad>/dpad/up");
         }
         else
         {
-            if (kb.upArrowKey.isPressed) move = 1;
-            else if (kb.downArrowKey.isPressed) move = -1;
+            moveAction.AddCompositeBinding("1DAxis")
+                .With("Negative", "<Keyboard>/downArrow")
+                .With("Positive", "<Keyboard>/upArrow");
         }
-    }
-
-    void FixedUpdate()
-    {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, move * speed);
-    }
-
-    public void ResetPosition()
-    {
-        rb.linearVelocity = Vector2.zero;
-        transform.position = startPosition;
     }
 }
